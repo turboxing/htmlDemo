@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+ <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+ <title>JS动画</title>
+ <style type="text/css">
+    .tip {
+        text-align: center;
+        margin-top: 60px;
+        height: 100px;
+    }
+  #playbox{ width:500px; height:500px; background:#09F; position:relative;margin: 0 auto;}
+  #box{ width:50px; height:50px; background:#FFF; position:absolute; top:50px; left:50px;}
+    .btncotent {
+        text-align: center;
+    }
+    #btn {
+        margin-top: 20px;
+        width: 200px;
+        height: 80px;
+    }
+ </style>
+ <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+</head>
+<body>
+    <div class="tip">JS实现的动画效果演示</div>
+ <div id="playbox">
+  <div id="box" dir="e"></div>
+ </div>
+<div class="btncotent">
+    <button type="button" id="btn">开始</button>
+</div>
+
+ <script type="text/javascript">
+  function play(){
+   var n = 100; //偏移距离（单位：像素）
+   var t = 0.5; //停顿时间（单位：秒）
+   var $box = $('#box');
+   var dir = $box.attr('dir') || 'e';
+   switch(dir){
+    case 'e':
+     $box.animate({left: '+='+ n +'px'});
+     dir = 's';
+     break;
+    case 's':
+     $box.animate({top: '+='+ n +'px'});
+     dir = 'w';
+     break;
+    case 'w':
+     $box.animate({left: '-='+ n +'px'});
+     dir = 'n';
+     break;
+    case 'n':
+     $box.animate({top: '-='+ n +'px'});
+     dir = 'e';
+     break;
+   }
+   $box.attr('dir',dir);
+   window.fn = setTimeout(function(){
+    play();
+   },t*1000);
+  }
+  $(document).ready(function(e) {
+   $('#btn').click(function(){
+    if($(this).html()=='开始'){
+     $(this).html('停止');
+     play();
+    }
+    else{
+     clearTimeout(fn);
+     $(this).html('开始');
+    }
+   });
+  });
+ </script>
+</body>
+</html>
